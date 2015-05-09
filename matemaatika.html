@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Matemaatika trenažöör</title>
+	<script>
+		// Kommentaar
+		var nimi = "Romil";
+		console.log("Minu nimi on "+nimi);
+		
+		// Defineerin muutujad
+		var arv_x;
+		var arv_y;
+		
+		function init(){
+			// Kui leht on laetud käivitatakse selle
+			// funktsiooni sisu
+			
+			//alert("Leht laetud");
+			
+			// Loome uue ülesande
+			uusYlesanne();
+		
+		}
+		
+		function uusYlesanne(){
+			
+			// genereerib arvu 0.....1
+			var loos = Math.round(Math.random());
+			
+			if(loos == 0){
+			
+				// teeme liitmistehte
+				
+				// genereerin arvu
+				arv_x = Math.round(Math.random()*100);
+				console.log("x "+arv_x);
+				
+				// Pikalt: 
+				// arv_x = Math.random();
+				// arv_x = arv_x*100;
+				// arv_x = Math.round(arv_x);
+				
+				arv_y = Math.round((100-arv_x) * Math.random());
+				console.log("y "+arv_y);
+				
+				document.getElementById("ylesanne").innerHTML = arv_x + "+" + arv_y;
+				
+			
+			}else if(loos == 1){
+			
+				// teeme lahutamise
+				
+				
+				//1. random * 100 ümardatult  
+				//2. ümardate arvx*random
+				arv_x = Math.round(Math.random()*100);
+				arv_y = Math.round(arv_x* Math.random());
+				
+				document.getElementById("ylesanne").innerHTML = arv_x + "-" + arv_y;
+			
+			}
+		
+		}
+		
+		
+		// kui keegi vajutab nuppu kontrolli
+		function kontrolli(){
+			
+			var vastus = document.getElementById("vastus").value;
+			
+			// eval arvutab vastuse ükskõik mis tehtele
+			var arvutivastus = eval(document.getElementById("ylesanne").innerHTML);
+			
+			if(vastus == arvutivastus){
+				console.log("Õige vastus");
+			}else{
+				console.log("Vale vastus");
+			}
+			
+		}
+		
+		
+	</script>
+</head>
+<body onload="init()">
+	<h1>Trenažöör</h1>
+	<p>
+		Arvuta palju on: <span id="ylesanne" >Siia tekib ülesanne</span>= 
+		<input id="vastus" type="text">
+		<!-- Kommentaar -->
+		<input type="button" value="Kontrolli" onclick="kontrolli()" >
+	</p>
+</body>
+</html>
