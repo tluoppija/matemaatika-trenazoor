@@ -29,7 +29,9 @@ nupp.disabled = false;
 
 
 Valmis lahendus laadimisel:
-matem_alg
+
+![alt text](https://raw.githubusercontent.com/veebirakenduste-kasutajaliidesed-2016k/matemaatika-trenazoor/master/matem_alg.png "Valmis lahendus laadmisel")
 
 Valmis lahendus pärast juba mitmendat kontrollimist ja ühte vale tehet:
-matem_kontrollitud
+
+![alt text](https://raw.githubusercontent.com/veebirakenduste-kasutajaliidesed-2016k/matemaatika-trenazoor/master/matem_kontrollitud.png "Valmis lahendus pärast kontrollimist")
