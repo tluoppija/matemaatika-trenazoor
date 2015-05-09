@@ -1,0 +1,2 @@
+# matemaatika-trenazoor
+Esimene ülesanne
