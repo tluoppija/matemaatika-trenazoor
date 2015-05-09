@@ -1,95 +1,194 @@
-﻿<!doctype html>
+﻿
+
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
 	<title>Matemaatika trenažöör</title>
 	<script>
-		// Kommentaar
-		var nimi = "Romil";
-		console.log("Minu nimi on "+nimi);
-		
-		// Defineerin muutujad
 		var arv_x;
 		var arv_y;
-		
-		function init(){
-			// Kui leht on laetud käivitatakse selle
-			// funktsiooni sisu
-			
-			//alert("Leht laetud");
-			
-			// Loome uue ülesande
-			uusYlesanne();
-		
+		var oige_Vastus;
+		var koik = 0;
+		var oiged = 0;
+		var v_arvud;
+		var k_tulemus;
+		var aja_lim;
+		var jargi;
+		function init(){	
+		//muutujad
+		v_arvud = document.getElementById("arvud");
+		k_tulemus = document.getElementById("kontrolli_tulemus");
+		//leiame arvud x ja y
+		document.getElementById("popup").checked = true;
+		uusYl();
 		}
-		
-		function uusYlesanne(){
-			
-			// genereerib arvu 0.....1
-			var loos = Math.round(Math.random());
-			
-			if(loos == 0){
-			
-				// teeme liitmistehte
+		function uusYl(){
+				uus_tehe.disabled = true;
+				kontrolli.disabled = false;
+				vastus.value = "";
+				document.getElementById("test").checked = false;
+				//tehte valik(+-*/)
+				var loos = Math.round(Math.random()*3);
+				//liitmine
+				if(loos==0){
+				//lahutamine
+					arv_x = Math.round(Math.random()*100);
+					arv_y = Math.round((100-arv_x) * Math.random());
 				
-				// genereerin arvu
-				arv_x = Math.round(Math.random()*100);
-				console.log("x "+arv_x);
+					v_arvud.innerHTML = arv_x + "+" + arv_y;
 				
-				// Pikalt: 
-				// arv_x = Math.random();
-				// arv_x = arv_x*100;
-				// arv_x = Math.round(arv_x);
+
+				}else if(loos==1) {
+					arv_x = Math.round(Math.random()*100);
+					arv_y = Math.round(arv_x * Math.random());
 				
-				arv_y = Math.round((100-arv_x) * Math.random());
-				console.log("y "+arv_y);
+					v_arvud.innerHTML = arv_x + "-" + arv_y;
+				}else if(loos==2){
+				//korrutamine
+					arv_x = Math.round(Math.random()*10);
+					arv_y = Math.round(Math.random()*10);
+					
+					v_arvud.innerHTML = arv_x + "*" + arv_y;
+				}else if(loos==3){
+				//jagamine
+					arv_x = Math.round(Math.random()*10);
+					arv_y = Math.round(1 + Math.random()*9);					
+					v_arvud.innerHTML = arv_x * arv_y + "/" + arv_y;
+				}
+				aja_lim = window.setTimeout("aeg()", 6000);
 				
-				document.getElementById("ylesanne").innerHTML = arv_x + "+" + arv_y;
+
+				//Näitab palju on aega jäänud "countdown kell"
+				jargi = document.getElementById("aeg_Jaanud");
+				var j1 = setTimeout(function(){jargi.innerHTML="5"}, 1000);
+				var j2 = setTimeout(function(){jargi.innerHTML="4"}, 2000);
+				var j3 = setTimeout(function(){jargi.innerHTML="3"}, 3000);
+				var j4 = setTimeout(function(){jargi.innerHTML="2"}, 4000);
+				var j5 = setTimeout(function(){jargi.innerHTML="1"}, 5000);
+				var j6 = setTimeout(function(){jargi.innerHTML="Aeg läbi"}, 6000);
 				
-			
-			}else if(loos == 1){
-			
-				// teeme lahutamise
 				
-				
-				//1. random * 100 ümardatult  
-				//2. ümardate arvx*random
-				arv_x = Math.round(Math.random()*100);
-				arv_y = Math.round(arv_x* Math.random());
-				
-				document.getElementById("ylesanne").innerHTML = arv_x + "-" + arv_y;
-			
+			}//mis juhtub, kui aeg otsa saab
+			function aeg(){
+
+				k_tulemus.innerHTML = "Liiga aeglane";
+				k_tulemus.style.color = "yellow";
+				koik = ++koik;
+				statistika();
+				uus_tehe.disabled = false;
+				kontrolli.disabled = true;
+				/*Kuidas teha nii, et, kui aeg on läbi ja siis enter vajutada
+				siis tuleb uus ül?*/
+
 			}
-		
-		}
-		
-		
-		// kui keegi vajutab nuppu kontrolli
-		function kontrolli(){
+			function peata_counter(){
+				window.clearTimeout(j1);
+				window.clearTimeout(j2);
+				window.clearTimeout(j3);
+				window.clearTimeout(j4);
+				window.clearTimeout(j5);
+				window.clearTimeout(j6);
+				}
 			
-			var vastus = document.getElementById("vastus").value;
-			
-			// eval arvutab vastuse ükskõik mis tehtele
-			var arvutivastus = eval(document.getElementById("ylesanne").innerHTML);
-			
-			if(vastus == arvutivastus){
-				console.log("Õige vastus");
-			}else{
-				console.log("Vale vastus");
+			function statistika(){
+				var protsent = document.getElementById("skoor");
+				protsent.value = Math.round((oiged/koik*100));
+				
 			}
-			
-		}
-		
-		
+			function kontrolliYl(){
+				
+				var vastus = document.getElementById("vastus").value;
+				// eval arvutab vastuse ükskõik mis tehtele
+				var arvutivastus = eval(arvud.innerHTML);
+				arvutivastus = +arvutivastus.toFixed(2);
+				//kiire kontroll, et mingi vastus ikkagist oleks
+				if(vastus == ""){
+					alert("Sisesta vastus!");
+				}else{
+						if(vastus == arvutivastus){
+							console.log("Õige vastus");
+							k_tulemus.innerHTML = "Õige";
+							k_tulemus.style.color = "green";
+							uus_tehe.disabled = false;
+							kontrolli.disabled = true;
+							oiged = ++oiged;
+							koik = ++koik;
+							statistika();
+							document.getElementById("oiged").innerHTML = oiged;
+							document.getElementById("koik").innerHTML = koik;
+							window.clearTimeout(aja_lim);
+							uusYl();
+							peata_counter();
+							
+						}else{
+							console.log("Vale vastus");
+							k_tulemus.innerHTML = "Vale";
+							k_tulemus.style.color = "red";
+							koik = ++koik;
+							statistika();
+							document.getElementById("koik").innerHTML = koik;
+							window.clearTimeout(aja_lim);
+							uus_tehe.disabled = false;
+							kontrolli.disabled = true;
+							peata_counter();
+						}
+						/*lugeja, mis teavitab,
+						kui on teatud arv õigeid
+						vastuseid*/
+						if((oiged % 5 == 0) && oiged != 0){
+							if(popup.checked == true){
+								alert("Palju önne, Te olete õigesti vastanud " + oiged +  " tehet!");
+							}//lugeja reset
+						}
+						/*Algselt oli see lugeja koht selline:
+						if(popup.checked == true){
+							if(popupcounter == oiged + 5){
+								alert...
+								popupcounter = popupcounter + 5;
+								}
+						}
+						*/	
+						//Suht peadselt mõistsin, miks see mõte väga halb oli.
+				}
+				
+			}
+			function kast(){
+				//No kui tõesti ei tule vastus ära, siis saab edasi skippida
+				if(document.getElementById("test").checked == true){
+					uus_tehe.disabled = false;
+					koik = ++koik;
+					statistika();
+				}else{
+					uus_tehe.disabled = true;
+					}
+	}
 	</script>
 </head>
 <body onload="init()">
-	<h1>Trenažöör</h1>
-	<p>
-		Arvuta palju on: <span id="ylesanne" >Siia tekib ülesanne</span>= 
-		<input id="vastus" type="text">
-		<!-- Kommentaar -->
-		<input type="button" value="Kontrolli" onclick="kontrolli()" >
-	</p>
+	<div id="wrapper">
+        <h1>Trenažöör</h1>
+        <p style="text-align:right;">
+            Arvuta palju on: <span id="arvud"></span> = 
+            <input id="vastus" type="text" onkeydown="if (event.keyCode == 13) document.getElementById('kontrolli').click()"/>
+            <input id="kontrolli" type="button" value="Kontrolli" onclick="kontrolliYl()"/>
+            <input id="uus_tehe" type="button" value="Uus tehe" onClick="uusYl()">
+            <meter id="skoor" min="0" max="100" value="0"></meter> Mitu protsenti on õiged
+            <br>
+        </p>
+        <p>
+            <input id="test" type="checkbox" onClick="kast()"> (kui enam ei jaksa)
+            <input id="popup" type="checkbox" onClick"pu_kast"> (Pop-ups)
+		</p>
+        <p> Vastuseid kokku: <span id="koik">0</span>, nendest õiged on: <span id="oiged">0</span>
+        <p> Aega jäänud: <span id="aeg_Jaanud"></span>
+        <p id="kontrolli_tulemus"></p>
+        <p> Komakohtade täpsustamiseks kasuta punkti(2 kohta pärast koma).
+        <br>
+        <br>
+ 
+        <p> <a class="link" href="../2_tund/profiilv2.html" target="_parent">Tagasi profiilile</a></li>
+	</div>
+
 </body>
 </html>
